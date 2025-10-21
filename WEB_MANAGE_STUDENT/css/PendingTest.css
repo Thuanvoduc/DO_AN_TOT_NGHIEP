@@ -1,0 +1,165 @@
+   body {
+       font-family: Arial, sans-serif;
+       margin: 20px;
+   }
+
+   .uid-item {
+       margin: 10px 0;
+       padding: 10px;
+       border: 1px solid #ccc;
+       border-radius: 8px;
+   }
+
+   button {
+       margin-left: 10px;
+   }
+
+   .form-label {
+       margin-top: 20px;
+   }
+
+   .form-control {
+       border-color: black;
+       border-radius: 0%;
+   }
+
+   .form-select {
+       padding: 5px;
+   }
+
+   /* Menu */
+   .menu {
+       display: flex;
+       gap: 15px;
+       margin-bottom: 20px;
+   }
+
+   .menu button {
+       padding: 10px 15px;
+       border: none;
+       background-color: #f0f0f0;
+       cursor: pointer;
+       border-radius: 5px;
+   }
+
+   .menu button.active {
+       background-color: #007BFF;
+       color: white;
+   }
+
+   /* Box hiển thị */
+   .content-section {
+       display: none;
+   }
+
+   .content-section.active {
+       display: block;
+   }
+
+   .card {
+       border: 1px solid #ccc;
+       border-radius: 6px;
+       padding: 10px;
+       margin: 10px 0;
+   }
+
+   .card button {
+       margin-left: 10px;
+   }
+
+   /* thao tác phần nút nhấn */
+   .view-info-btn {
+       background-color: #28a745;
+       /* xanh lá */
+       color: white;
+   }
+
+   /* ====== Filter container (date + show all) ====== */
+   .filter-date-container {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       gap: 12px;
+       margin-bottom: 12px;
+   }
+
+   .filter-date-label {
+       font-weight: 500;
+       color: #333;
+       margin-right: 8px;
+       white-space: nowrap;
+   }
+
+   /* group input + button */
+   .filter-controls {
+       display: flex;
+       align-items: center;
+       gap: 8px;
+   }
+
+   /* date input */
+   .filter-date-input {
+       width: 200px;
+       /* kích thước chuẩn, chỉnh trong css khi cần */
+       border-radius: 6px;
+       border: 1px solid #ccc;
+       padding: 6px 10px;
+       transition: border-color .15s ease, box-shadow .15s ease;
+   }
+
+   /* focus/hover trên input */
+   .filter-date-input:focus,
+   .filter-date-input:hover {
+       border-color: #0d6efd;
+       /* bootstrap primary */
+       box-shadow: 0 0 6px rgba(13, 110, 253, 0.12);
+       outline: none;
+   }
+
+   /* nút Hiển thị tất cả */
+   .btn-show-all {
+       padding: .35rem .6rem;
+       border-radius: 6px;
+       font-size: .875rem;
+       display: inline-flex;
+       align-items: center;
+       gap: 6px;
+       white-space: nowrap;
+       transition: transform .08s ease, box-shadow .12s ease;
+   }
+
+   /* hiệu ứng hover/focus cho nút */
+   .btn-show-all:hover,
+   .btn-show-all:focus {
+       transform: translateY(-1px);
+       box-shadow: 0 4px 10px rgba(13, 110, 253, 0.08);
+   }
+
+   /* trạng thái active (nếu bạn muốn highlight khi active) */
+   .btn-show-all.active {
+       background-color: #0d6efd;
+       color: #fff;
+       border-color: #0d6efd;
+   }
+
+   /* Responsive: trên màn hình nhỏ, stack thành cột */
+   @media (max-width: 576px) {
+       .filter-date-container {
+           flex-direction: column;
+           align-items: stretch;
+       }
+
+       .filter-controls {
+           width: 100%;
+           gap: 8px;
+       }
+
+       .filter-date-input {
+           width: 100%;
+       }
+
+       .btn-show-all {
+           width: 100%;
+           justify-content: center;
+       }
+   }

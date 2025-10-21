@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>UID Pending Approval</title>
+    <!-- BOOSTRAP -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- JQUERY -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <!-- CSS LINK -->
+    <link rel="stylesheet" href="css/PendingTest.css">
+    <!-- ANIMATE CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- TOAST MESSAGE -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</head>
+
+<body>
+    <!-- Menu -->
+    <div class="menu">
+        <button class="tab-button" data-section="pending-list">Pending</button>
+        <button class="tab-button" data-section="student-list">Student List</button>
+    </div>
+
+    <!-- Section Pending -->
+    <div id="pending-list" class="content-section active">
+        <h2>📋 UID Pending Approval</h2>
+        <div id="pendingList">Loading...</div>
+    </div>
+
+    <!-- Nội dung Student List -->
+    <div id="student-list" class="content-section">
+        <h3>Danh sách Học sinh</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>UID</th>
+                    <th>Họ tên</th>
+                    <th>Lớp</th>
+                    <th>SĐT PH</th>
+                    <th>SĐT HS</th>
+                    <th>Địa chỉ</th>
+                    <th>Giới tính</th>
+                    <th>Ngày sinh</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="studentList"></tbody>
+        </table>
+    </div>
+
+    <!-- MODAL PENDING -->
+    <div class="modal fade" id="modal-pending" tabindex="-1" aria-labelledby="modalPendingLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPendingLabel">Điền thông tin User trước khi duyệt</h5>
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body">
+                    <form id="userForm">
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Họ và tên</label>
+                                <input type="text" class="form-control" id="name" placeholder="Nguyen Van A">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Vai trò</label>
+                                <input type="text" class="form-control" id="role" placeholder="Học sinh">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Lớp</label>
+                                <input type="text" class="form-control" id="class" placeholder="12A1">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">SĐT phụ huynh</label>
+                                <input type="text" class="form-control" id="parentPhone" placeholder="0912345678">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">SĐT học sinh</label>
+                                <input type="text" class="form-control" id="phone" placeholder="0909123456">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Địa chỉ</label>
+                                <input type="text" class="form-control" id="address" placeholder="HCM">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Giới tính</label>
+                                <select class="form-select" id="gender">
+                                    <option value="">-- Chọn --</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Ngày sinh</label>
+                                <input type="date" class="form-control" id="dob">
+                            </div>
+
+                        </div>
+                    </form>
+                    <div id="formError" class="text-danger mt-2" style="display:none;"></div>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        id="cancel-approve">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="confirm-approve">Phê duyệt</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL EDIT USER trong Student List -->
+    <div class="modal fade" id="modal-edit-student-list" tabindex="-1" aria-labelledby="modalPendingLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPendingLabel">Điền thông tin User trước khi duyệt</h5>
+                </div>
+
+                <!-- Body -->
+                <!-- hidden input để lưu UID -->
+                <input type="hidden" id="editUid">
+
+                <div class="modal-body">
+                    <form id="userForm">
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Họ và tên</label>
+                                <input type="text" class="form-control" id="student-name" placeholder="Nguyen Van A">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Vai trò</label>
+                                <input type="text" class="form-control" id="student-role" placeholder="Học sinh">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Lớp</label>
+                                <input type="text" class="form-control" id="student-class" placeholder="12A1">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">SĐT phụ huynh</label>
+                                <input type="text" class="form-control" id="student-parentPhone"
+                                    placeholder="0912345678">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">SĐT học sinh</label>
+                                <input type="text" class="form-control" id="student-phone" placeholder="0909123456">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Địa chỉ</label>
+                                <input type="text" class="form-control" id="student-address" placeholder="HCM">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Giới tính</label>
+                                <select class="form-select" id="student-gender">
+                                    <option value="">-- Chọn --</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Ngày sinh</label>
+                                <input type="date" class="form-control" id="student-dob">
+                            </div>
+
+                        </div>
+                    </form>
+                    <div id="formError" class="text-danger mt-2" style="display:none;"></div>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        id="cancel-approve">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="student-save-edit">Lưu thay đổi</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal xem thông tin học sinh -->
+    <div class="modal fade" id="viewInfoModal" tabindex="-1" aria-labelledby="viewInfoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewInfoLabel">📋 Thông tin học sinh</h5>
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body">
+                    <p><strong>UID:</strong> <span id="view-uid"></span></p>
+                    <p><strong>Cấp bậc:</strong> <span id="view-Role"></span></p>
+                    <p><strong>Họ tên:</strong> <span id="view-Name"></span></p>
+                    <p><strong>Lớp:</strong> <span id="view-Class"></span></p>
+                    <p><strong>SĐT PH:</strong> <span id="view-PhonePH"></span></p>
+                    <p><strong>SĐT HS:</strong> <span id="view-PhoneHS"></span></p>
+                    <p><strong>Địa chỉ:</strong> <span id="view-Address"></span></p>
+                    <p><strong>Giới tính:</strong> <span id="view-Gender"></span></p>
+                    <p><strong>Ngày sinh:</strong> <span id="view-Birthday"></span></p>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" id="cancel-approve" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Đóng</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal xem lịch sử quẹt thẻ -->
+    <div id="viewHistoryModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- đầu modal -->
+                <div class="modal-header">
+                    <h5 class="modal-title">📜 Lịch sử quẹt thẻ</h5>
+                </div>
+                <!-- thân modal -->
+                <div class="modal-body">
+                    <!-- bộ lọc FILTER -->
+                    <div class="filter-date-container">
+                        <label for="filterDate" class="filter-date-label">📅 Chọn ngày:</label>
+
+                        <div class="filter-controls">
+                            <input type="date" id="filterDate" class="form-control filter-date-input"
+                                aria-label="Chọn ngày để lọc lịch sử">
+                            <button type="button" id="showAllBtn" class="btn btn-outline-primary btn-sm btn-show-all"
+                                aria-label="Hiển thị tất cả bản ghi gần nhất">
+                                🔄 Hiển thị tất cả
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- TABLE HIỂN THỊ LỊCH SỬ QUẸT THẺ CỦA USER-->
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Thời gian</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyList">
+                            <!-- Dữ liệu sẽ được thêm bằng JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- cúi modal -->
+                <div class="modal-footer">
+                    <button type="button" id="cancel-approve" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal xóa thông tin học sinh -->
+    <div class="modal fade" id="deleteInfoModal" tabindex="-1" aria-labelledby="viewInfoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewInfoLabel">Xác nhận xóa thông tin học sinh</h5>
+                </div>
+
+                <!-- Body -->
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" id="cancel-approve" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" id="confirm-delete" class="btn btn-secondary" data-bs-dismiss="modal">Xác nhận
+                        xóa</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script type="module" src="js/pending.js"></script>
+</body>
+
+</html>

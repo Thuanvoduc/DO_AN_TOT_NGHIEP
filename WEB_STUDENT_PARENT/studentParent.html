@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Phụ huynh / Học sinh</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/studentParent.css">
+</head>
+
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <img id="school-logo" src="/image/logo/THUẬN HIẾU-logo.png" alt="LOGO">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a href="#" class="nav-link active" data-section="info">📘 Thông tin</a></li>
+                <li class="nav-item"><a href="#" class="nav-link" data-section="history">🕒 Lịch sử điểm danh</a></li>
+                <li class="nav-item"><a href="#" class="nav-link" data-section="noti">🔔 Thông báo</a></li>
+            </ul>
+            <hr>
+            <button class="btn btn-light w-100 mt-auto" id="logoutBtn">Đăng xuất</button>
+        </aside>
+
+        <!-- Main content -->
+        <main class="content flex-grow-1">
+            <!-- Phần tiêu đề tên trường -->
+            <div class="school-header">
+                <h4 class="school-header-title">TRƯỜNG TIỂU HỌC THUẬN HIẾU</h4>
+            </div>
+
+            <!-- Sections -->
+            <!-- Thông tin học sinh -->
+            <section id="section-info" class="content-section">
+                <!-- Tiêu đề -->
+                <div class="section-title-container">
+                    <h4 class="school-header-title">THÔNG TIN HỌC SINH</h4>
+                </div>
+
+                <!-- Đường kẻ -->
+                <div class="liner"></div>
+
+                <!-- Container chứa nội dung thông tin học sinh -->
+                <div class="student-info-container">
+                    <!-- Cột trái -->
+                    <div class="student-sidebar">
+                        <!-- Khung hiển thị thông tin học sinh -->
+                        <div class="student-sidebar-info">
+                            <div class="student-sidebar-info-content">
+                                <h4>Thông tin học sinh</h4>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Họ tên</h5>
+                                <h5>Nguyễn Đình Hiếu</h5>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Ngày sinh</h5>
+                                <h5>1/11/2003</h5>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Lớp</h5>
+                                <h5>2A9</h5>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Giới tính</h5>
+                                <h5>Nam</h5>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Địa chỉ</h5>
+                                <h5>HCM</h5>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>SĐT</h5>
+                                <h5>0909303591</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cột phải -->
+                    <div class="student-detail">
+                        <!-- biểu đồ hiển thị số lần quét thẻ của 5 ngày gần nhất -->
+                        <div class="chart-container">
+                            <canvas id="rfidBarChart"></canvas>
+                        </div>
+
+                        <!-- biểu đồ hiển thị số ngày đã đi học trong tuần -->
+                        <div class="chart-day-atschool-container">
+                            <canvas id="weeklyAttendanceChart"></canvas>
+                        </div>
+
+                        <!-- bảng thông tin người liên hệ -->
+                        <div class="student-parent-contact">
+                            <div class="student-sidebar-info-content">
+                                <h4>Thông tin người liên hệ</h4>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Họ tên mẹ</h5>
+                                <h5>Nguyễn Thị Cúc</h5>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Họ tên cha</h5>
+                                <h5>Nguyễn Đình Dũng</h5>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Địa chỉ liên hệ</h5>
+                                <h5>18/18A4 Nguyễn Thị Minh Khai P. Sài Gòn</h5>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Điện thoại mẹ</h5>
+                                <h5>0978234567</h5>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Điện thoại cha</h5>
+                                <h5>6745784912</h5>
+                            </div>
+                        </div>
+
+                        <!-- Tổng quan điểm danh -->
+                        <div class="attendance-summary">
+                            <div class="student-sidebar-info-content">
+                                <h4>Tổng quan điểm danh</h4>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Tổng số lượt quẹt</h5>
+                                <h5 class="value" id="totalSwipes">--</h5>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Số ngày đi học</h5>
+                                <h5 class="value" id="daysPresent">--</h5>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Số ngày vắng</h5>
+                                <h5 class="value" id="daysAbsent">--</h5>
+                            </div>
+                            <div class="student-sidebar-info-content">
+                                <h5>Lần quẹt gần nhất:</h5>
+                                <h5 class="value" id="lastSwipe">--</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Lịch sử điểm danh -->
+            <section id="section-history" class="content-section d-none">
+                <!-- Tiêu đề -->
+                <div class="section-title-container">
+                    <h4 class="school-header-title">LỊCH SỬ ĐIỂM DANH</h4>
+                </div>
+
+                <!-- Đường kẻ -->
+                <div class="liner"></div>
+
+                <!-- Container chứa nội dung lịch sử điểm danh -->
+                <div class="student-history-container">
+                    <!-- bộ lọc FILTER -->
+                    <div class="filter-date-container">
+                        <label for="filterDate" class="filter-date-label">📅 Chọn ngày:</label>
+
+                        <div class="filter-controls">
+                            <input type="date" id="filterDate" class="form-control filter-date-input"
+                                aria-label="Chọn ngày để lọc lịch sử">
+                            <button type="button" id="showAllBtn" class="btn btn-outline-primary btn-sm btn-show-all"
+                                aria-label="Hiển thị tất cả bản ghi gần nhất">
+                                🔄 Hiển thị tất cả
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- TABLE HIỂN THỊ LỊCH SỬ QUẸT THẺ CỦA USER-->
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Thời gian</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyList">
+                            <!-- Dữ liệu sẽ được thêm bằng JS -->
+                        </tbody>
+                    </table>
+
+                    <!-- PHÂN TRANG -->
+                    <div id="pagination" class="pagination-container"></div>
+                </div>
+            </section>
+
+            <!-- Thông báo -->
+            <section id="section-noti" class="content-section d-none">
+                <div class="section-title-container">
+                    <h4 class="school-header-title">THÔNG BÁO</h4>
+                </div>
+                <div class="liner"></div>
+                <p>Danh sách thông báo quan trọng gửi đến phụ huynh và học sinh.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/studentParent.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+
+</html>
